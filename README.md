@@ -1,7 +1,7 @@
 # pscanf.h
 
 Con este archivo de cabecera podrás validar el dato ingresado por el usuario. En algunas ocasiones cuando tenemos un programa con menú de opciones y pedimos algún dato, por ejemplo un entero, el usuario toma la decisión de que tipo de dato quiere ingresar y sí llegara escribir una cadena, lo más probable es que haya un resultado inesperado en el programa. 
-Por esa razón, con `pscanf.h` soluciona ese problema.
+Por esa razón, se creó `pscanf.h` para darle solución a este problema.
 
 # Instalación
 
