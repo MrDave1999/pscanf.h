@@ -34,7 +34,7 @@ struct _String
 {
 	char* s;
 	size_t length; 
-	size_t id; 
+	size_t id;  
 };
 
 typedef struct _String string;
