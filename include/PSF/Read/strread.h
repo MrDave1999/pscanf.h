@@ -63,5 +63,5 @@ uint8_t _strreadEx(string* const ptr)
 	ptr->length = count;
 	return EXIT_SUCCESS;
 }
-
+ 
 #endif /* _STRREAD_H */
