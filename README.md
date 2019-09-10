@@ -1,125 +1,110 @@
-# pscanf.h
+# PScanf
+[![pscanf.h](https://shields.southcla.ws/badge/PSCANF-V2.0-2f2f2f.svg?style=flat-square)](https://github.com/MrDave1999/pscanf.h)
 
-Con este archivo de cabecera podrás validar el dato ingresado por el usuario. En algunas ocasiones cuando tenemos un programa con menú de opciones y pedimos algún dato, por ejemplo un entero, el usuario toma la decisión de que tipo de dato quiere ingresar y sí llegara escribir una cadena, lo más probable es que haya un resultado inesperado en el programa. 
-Por esa razón, se creó `pscanf.h` para darle solución a este problema.
+Las caracteristicas de P-Scanf son:
+
+- Detecta si el dato ingresado por el usuario es el correcto, es decir, si el usuario escribe un caracter y lo que se pide realmente es un entero, dará un error.
+- Limpia el búfer del teclado de manera automáticamente, siempre y cuando se use las macros de P-Scanf.
+- Tiene un manejo de cadenas de forma segura, así que no se necesita especificar el tamaño del arreglo al momento de pedir información por teclado.
+- Cuando el programa termina su ejecución, P-Scanf libera la memoria de forma automática.
 
 # Instalación
 
-Hay dos formas de instalar `pscanf.h`.
-1. Podrías agregar el archivo de cabecera en la carpeta `include`, la que viene por defecto en el IDE (entorno de desarrollo integrado) y luego de eso, debes incluir el fichero de esta forma:
+Una de las maneras para poder instalar la herramienta P-Scanf, es agregando la carpeta `PSF` en el directorio `include`. Esta carpeta se la encuentra donde se haya instalado el compilador o IDE (Entorno desarrollo integrado).
+Por ejemplo, si usamos Dev-C++, se lo debería añadir en la siguiente ruta: C:\Program Files\Dev-Cpp\include\PSF .
+Luego nos vamos al archivo fuente y lo incluimos de esta forma:
 ```C
-#include <pscanf.h>
+#include <PSF/pscanf.h>
 ```
-2. La siguiente manera es agregando `pscanf.h` en la carpeta dónde esté el programa fuente situado y luego deberás incluir el fichero de esta forma:
+La segunda manera, es agregando la carpeta `PSF` en el directorio donde esté el proyecto y lo incluyes de esta forma:
 ```C
-#include "pscanf.h"
+#include "PSF/pscanf.h"
 ```
 
 # Macros
 
-- `dataread` = Permite leer un dato de cualquier tipo desde el búfer de entrada estándar.
+- `dataread(_format, _var, ...)` = Permite leer un dato de cualquier tipo desde el búfer de entrada estándar.
 
-- `strread` = Lee una cadena desde el búfer de entrada estándar. Además de eso, evita el desbordamiento de búfer.
+- `strread(_var, ...)` = Lee una cadena desde el búfer de entrada estándar. Esta macro hace que la función retorne 1 si llega a suceder un fallo en la asignación de memoria, debido a que, la cadena se reserva dinámicamente. 
 
-- `pauseprogram` = Pausa el programa y envía un mensaje diciendo: "Presiona enter para continuar...".
-
-- `DISABLE_MESSAGE_ERROR` = Desactiva los mensajes de error. Lo debes agregar antes de incluir `pscanf.h`.
-```C
-#define DISABLE_MESSAGE_ERROR
-#include "pscanf.h"
-```
+- `pauseprogram()` = Pausa el programa y envía un mensaje diciendo: "Presiona enter para continuar...".
 
 # Uso
 
-- Ejemplo 1:
-
-Pedir un dato entero al usuario.
+**Lectura de un entero:**
 ```C
-#include "pscanf.h"
+#include <PSF\pscanf.h>
+
 int main(void)
 {
-	int x;
-	dataread("%d", &x, "Ingrese un entero:");
+	int a;
+	dataread("%d", &a, "Ingrese un int: ");
+	printf("%d\n", a);
 	pauseprogram();
 	return 0;
 }
 ```
+Si el usuario llegara a escribir un caracter, dará un mensaje de error: "Error: Ingrese un valor entero: ".
 
-- Ejemplo 2:
-
-Pedir un dato flotante al usuario.
+**lectura de una cadena:**
 ```C
-#include "pscanf.h"
+#include <PSF\pscanf.h>
+
 int main(void)
 {
-	float x;
-	dataread("%f", &x, "Ingrese un decimal:");
+	string name = { NULL }; 
+	strread(&name, "Ingrese un string: ");
+	printf("String: %s - Length: %d\n", name, name.length);
 	pauseprogram();
 	return 0;
 }
 ```
+Con el miembro "length" se obtiene la longitud de la cadena.
 
-Sí el usuario llegara escribir esto: `hhhhhh` o `24hhhh` en vez de un "entero" o un "flotante", `dataread` pausará el programa y manda un mensaje de error.
-
-- Ejemplo 3:
-
-Pedir un caracter al usuario.
-Sí el usuario ingresa más de un caracter, `dataread` pausa el programa y manda un mensaje de error.
+**Recorrido de una cadena:**
 ```C
-#include "pscanf.h"
+#include <PSF\pscanf.h>
+
 int main(void)
 {
-	char x;
-	dataread("%c", &x, "Ingrese un caracter:");
+	int i;
+	string name = { NULL }; 
+	strread(&name, "Ingrese un string: ");
+	for (i = 0; i != name.length; ++i)
+		printf("%c\n", name.s[i]);
 	pauseprogram();
 	return 0;
 }
 ```
+Con el miembro "s" se obtiene el caracter.
 
-- Ejemplo 4:
-
-Pedir una cadena al usuario.
-Sí la cantidad máxima de caracteres es 24. `strread` sólo va a leer 22 caracteres y asigna un caracter nulo al búfer de destino (en este caso es el array `x`).
+**Almacenamiento de múltiples cadenas:**
 ```C
-#include "pscanf.h"
-int main(void)
-{
-	char x[24];
-	strread(x, 24, "Ingrese una cadena:");
-	pauseprogram();
-	return 0;
-}
-```
-
-# Código de Prueba
-```C
-#include "pscanf.h"
+#include <PSF\pscanf.h>
+#define MAX_STRINGS (5)
 
 int main(void)
 {
-	do
+	int i, j;
+	string name[MAX_STRINGS] = { NULL };
+	for (i = 0; i != MAX_STRINGS; ++i)
+		strread(&name[i], "Ingrese un string: ", i + 1);
+	
+	for (i = 0; i != MAX_STRINGS; ++i)
+		printf("%s\n", name[i]);
+		
+	for (i = 0; i != MAX_STRINGS; ++i)
 	{
-		int x;
-		char y;
-		char z[24];
-		float p;
-		dataread("%d", &x, "Ingrese un entero:");
-		dataread("%c", &y, "Ingrese un caracter:");
-		strread(z, 24, "Ingrese una cadena:");
-		dataread("%f", &p, "Ingrese un decimal:");
-		printf("\n\n->Data:\n");
-		printf("X: %d\n", x);
-		printf("Y: %c\n", y);
-		printf("Z: %s\n", z);
-		printf("P: %.3f\n", p);
-		pauseprogram();
-	} while (1);
+		for (j = 0; name[i].length; ++j)
+			printf("%c\n", name[i].s[j]);
+		printf("\n");
+	}
+	pauseprogram();
 	return 0;
 }
 ```
 
-# Resultado en Pantalla
-[![Resultado en Pantalla](https://i.imgur.com/uFshspC.png)](https://github.com/MrDave1999)
+**Nota:** Es obligatorio inicializar a NULL cada variable de tipo string.
 
 # Créditos
 
