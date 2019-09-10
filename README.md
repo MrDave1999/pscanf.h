@@ -93,7 +93,7 @@ uint8_t DataEntry(string* name)
 {
 	int i;
 	for (i = 0; i != MAX_STRINGS; ++i)
-	{ /* Es necesario las llaves, la macro strread expande 2 líneas de códigoa. */
+	{ /* Es necesario las llaves, la macro strread expande 2 líneas de código. */
 		strread(&name[i], "Ingrese un string %d: ", i + 1);
 	}
 	return 0;
