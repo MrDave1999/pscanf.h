@@ -34,7 +34,7 @@ void _datareadEx(const char*const _format, void* const _var)
 			_value = 0;
 		if (_len >= 1 && !_value)
 		{
-			MESSAGE_ERROR();
+			MESSAGE_ERROR(); 
 			continue;
 		}
 		/* Para evitar que escriban únicamente espacios cuando se pida un caracter */
