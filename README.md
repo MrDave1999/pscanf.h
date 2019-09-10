@@ -128,6 +128,6 @@ int main(void)
 # Créditos
 
 - [MrDave](https://github.com/MrDave1999) 
-	- Por el desarrollo de pscanf.h
+	- Por el desarrollo de la herramienta P-Scanf
 - [Microsoft Corporation](https://github.com/Microsoft) 
 	- Se usó el compilador `cl.exe` para poder compilar los códigos de prueba, de ese modo se comprueba sí no hubo algún error.
