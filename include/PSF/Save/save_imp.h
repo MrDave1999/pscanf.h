@@ -61,4 +61,4 @@ void CopyStdinToString(const node* end, char* const buf, const size_t* const cou
 	*(buf + *count) = '\0';
 }
 
-#endif /* _SAVE_IMP_H */
+#endif /* _SAVE_IMP_H */ 
