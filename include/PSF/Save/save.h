@@ -5,7 +5,6 @@ struct _node
 {
 	char a;
 	struct _node* sig;
-	struct _node* ant;
 };
 
 typedef struct _node node;
