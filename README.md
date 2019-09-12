@@ -59,8 +59,6 @@ int main(void)
 	int a;
 	dataread("%d", &a, "Ingrese un int: ");
 	printf("%d\n", a);
-	sfree();
-	pause();
 	return 0;
 }
 ```
