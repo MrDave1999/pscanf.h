@@ -32,6 +32,8 @@ Cuando hayas hecho los dos pasos anteriores, procedes a incluir el archivo pscan
 	
   - El archivo de cabecera llamado pscanf.h la debes añadir en la carpeta `include` y se lo encuentra en la siguiente ruta:
   `C:\Program Files\Dev-Cpp\include`
+  
+La biblioteca y el archivo de cabecera lo debes descargar aquí: [PScanf](https://github.com/MrDave1999/pscanf.h/releases/tag/v2.0)
  
 # Macros
 
