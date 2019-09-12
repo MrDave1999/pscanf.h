@@ -45,7 +45,7 @@ La biblioteca y el archivo de cabecera lo debes descargar aquí: [PScanf](https:
 
 - `pause()` = Pausa el programa y envía un mensaje diciendo: "Presiona enter para continuar...".
 
-- `sfree()` = Libera la memoria dinamica reservada con `strread`.
+- `sfree()` = Libera todos los espacios de memoria reservados con la macro `strread`.
 
 # Uso
 
