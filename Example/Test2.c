@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <PSF\pscanf.h>
+#include <pscanf.h>
 
 int main(void)
 {
