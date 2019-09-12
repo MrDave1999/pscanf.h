@@ -1,4 +1,4 @@
-# PScanf
+# pscanf.h
 [![pscanf.h](https://shields.southcla.ws/badge/PSCANF-V2.0-2f2f2f.svg?style=flat-square)](https://github.com/MrDave1999/pscanf.h)
 
 Las características de P-Scanf son:
@@ -6,42 +6,59 @@ Las características de P-Scanf son:
 - Detecta si el dato ingresado por el usuario es el correcto, es decir, si el usuario escribe un caracter y lo que se pide realmente es un entero, dará un error.
 - Limpia el búfer del teclado de manera automáticamente, siempre y cuando se use las macros de P-Scanf.
 - Tiene un manejo de cadenas de forma segura, así que no se necesita especificar el tamaño del arreglo al momento de pedir información por teclado.
-- Cuando el programa termina su ejecución, P-Scanf libera la memoria de forma automática.
+- Libera la memoria automáticamente si llegara a ver un fallo en la asignación de memoria.
 
 # Instalación
 
-Una de las maneras para poder instalar la herramienta P-Scanf, es agregando la carpeta `PSF` en el directorio `include`. Esta carpeta se la encuentra donde se haya instalado el compilador o IDE (Entorno desarrollo integrado).
-Por ejemplo, si usamos Dev-C++, se lo debería añadir en la siguiente ruta: C:\Program Files\Dev-Cpp\include\PSF .
-Luego nos vamos al archivo fuente y lo incluimos de esta forma:
-```C
-#include <PSF/pscanf.h>
-```
-La segunda manera, es agregando la carpeta `PSF` en el directorio donde esté el proyecto y lo incluyes de esta forma:
-```C
-#include "PSF/pscanf.h"
-```
+- Si usas cl.exe (de Visual Studio) como  compilador de C/C++, debes agregar lo siguiente:
 
+  - La biblioteca estática llamada libpscanf.lib la debes añadir en la carpeta `lib` y se lo encuentra en la siguiente ruta:            	`C:\Program Files\Microsoft Visual Studio 12.0\VC\lib`
+	
+	Luego de añadir la biblioteca, abrimos el Visual Studio y nos vamos a la sección de Proyecto -> Propiedades de configuración -> Vinculador -> Entrada -> Dependencias adicionales (en esta opción agregas el nombre de la biblioteca estática con su respectiva extensión .lib) .
+	
+  - El archivo de cabecera llamado pscanf.h la debes añadir en la carpeta `include` y se lo encuentra en la siguiente ruta:
+	`C:\Program Files\Microsoft Visual Studio 12.0\VC\include`
+ 
+Cuando hayas hecho los dos pasos anteriores, procedes a incluir el archivo pscanf.h en el archivo de origen (donde está el main):
+```C
+#include <pscanf.h>
+```
+- Si usas Dev-C++ como IDE(Entorno de desarrollo integrado) para compilar códigos de C/C++, debes agregar lo siguiente:
+
+  - La biblioteca estática llamada libpscanf.a la debes añadir en la carpeta `lib` y se lo encuentra en la siguiente ruta: 
+  `C:\Program Files\Dev-Cpp\lib`
+	
+	Luego de añadir la biblioteca, abrimos el Dev-C++ y nos vamos a la sección de Proyecto -> Opciones del proyecto -> Parámetros -> Linker (en esta opción agregas el siguiente comando: -lpscanf) .
+	
+  - El archivo de cabecera llamado pscanf.h la debes añadir en la carpeta `include` y se lo encuentra en la siguiente ruta:
+  `C:\Program Files\Dev-Cpp\include`
+ 
 # Macros
 
 - `dataread(_format, _var, ...)` = Permite leer un dato de cualquier tipo desde el búfer de entrada estándar.
 
 - `strread(_var, ...)` = Lee una cadena desde el búfer de entrada estándar. Esta macro hace que la función retorne 1 si llega a suceder un fallo en la asignación de memoria, esto se debe, porqué la cadena se reserva dinámicamente. 
 
-- `pauseprogram()` = Pausa el programa y envía un mensaje diciendo: "Presiona enter para continuar...".
+# Funciones
+
+- `pause()` = Pausa el programa y envía un mensaje diciendo: "Presiona enter para continuar...".
+
+- `sfree()` = Libera la memoria dinamica reservada con `strread`.
 
 # Uso
 
 **Lectura de un entero:**
 ```C
 #include <stdio.h>
-#include <PSF/pscanf.h>
+#include <pscanf.h>
 
 int main(void)
 {
 	int a;
 	dataread("%d", &a, "Ingrese un int: ");
 	printf("%d\n", a);
-	pauseprogram();
+	sfree();
+	pause();
 	return 0;
 }
 ```
@@ -50,14 +67,15 @@ Si el usuario llegara a escribir un caracter, dará un mensaje de error: "Error:
 **Lectura de una cadena:**
 ```C
 #include <stdio.h>
-#include <PSF/pscanf.h>
+#include <pscanf.h>
 
 int main(void)
 {
 	string name = { NULL }; 
 	strread(&name, "Ingrese un string: ");
 	printf("String: %s - Length: %d\n", name, name.length);
-	pauseprogram();
+	sfree();
+	pause();
 	return 0;
 }
 ```
@@ -66,7 +84,7 @@ Con el miembro "length" se obtiene la longitud de la cadena.
 **Recorrido de una cadena:**
 ```C
 #include <stdio.h>
-#include <PSF/pscanf.h>
+#include <pscanf.h>
 
 int main(void)
 {
@@ -75,7 +93,8 @@ int main(void)
 	strread(&name, "Ingrese un string: ");
 	for (i = 0; i != name.length; ++i)
 		printf("%c\n", name.s[i]);
-	pauseprogram();
+	sfree();
+	pause();
 	return 0;
 }
 ```
@@ -85,7 +104,7 @@ Con el miembro "s" se obtiene el caracter.
 ```C
 #include <stdio.h>
 #include <stdint.h>
-#include <PSF/pscanf.h>
+#include <pscanf.h>
 #define MAX_STRINGS (5)
 
 /* La función retorna 0 si se pudo asignar memoria con la macro strread, de lo contrario, devuelve 1. */
@@ -118,7 +137,8 @@ int main(void)
 	string name[MAX_STRINGS] = { NULL };
 	if (DataEntry(name)) return 1;
 	PrintData(name);
-	pauseprogram();
+	sfree();
+	pause();
 	return 0;
 }
 ```
