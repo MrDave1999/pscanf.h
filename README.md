@@ -14,7 +14,12 @@ Las características de P-Scanf son:
 
   - La biblioteca estática llamada libpscanf.lib la debes añadir en la carpeta `lib` y se lo encuentra en la siguiente ruta:            	`C:\Program Files\Microsoft Visual Studio 12.0\VC\lib`
 	
-	Luego de añadir la biblioteca, abrimos el Visual Studio y nos vamos a la sección de Proyecto -> Propiedades de configuración -> Vinculador -> Entrada -> Dependencias adicionales (en esta opción agregas el nombre de la biblioteca estática con su respectiva extensión .lib) .
+	Para evitar esta posible advertencia del enlazador: 
+	`warning LNK4099: PDB 'libpscanf.pdb' was not found with 'libpscanf.lib' or at 'libpscanf.pdb'; linking object as if no debug info`
+	
+	Agrega el archivo `libpscanf.pdb` en la misma carpeta donde metas `libpscanf.lib` .
+	
+	Luego de añadir la biblioteca y el archivo .PDB, abrimos el Visual Studio y nos vamos a la sección de Proyecto -> Propiedades de configuración -> Vinculador -> Entrada -> Dependencias adicionales (en esta opción agregas el nombre de la biblioteca estática con su respectiva extensión .lib) .
 	
   - El archivo de cabecera llamado pscanf.h la debes añadir en la carpeta `include` y se lo encuentra en la siguiente ruta:
 	`C:\Program Files\Microsoft Visual Studio 12.0\VC\include`
